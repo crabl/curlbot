@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="disabled-adaptations" content="watch" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Curlbot</title>
+    <style type="text/css">
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 10px;
+        background: #000;
+        width: 176px;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+      }
+
+      select {
+        font-size: 30px;
+      }
+
+      button {
+        flex: 1;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+      <div style="display: flex; justify-content: space-between; flex: 1">
+        <span>END <%= end %></span> 
+        <span><%= position %></span> 
+        <span>ROCK <%= rock %></span>
+      </div>
+
+      <select style="margin-top: 15px;">
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+
+      <form action="" style="display: flex; flex: 1; justify-content: space-between; margin-top: 15px">
+        <button>
+          Next Rock
+        </button>
+      </form>
+
+      <form action="" style="display: flex; flex: 1; justify-content: space-between; margin-top: 15px">
+        <button>
+          End Game
+        </button>
+      </form>
+  </body>
+</html>
