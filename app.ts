@@ -72,7 +72,9 @@ const states = {
 }
 
 app.get('/', (req, res) => {
-  res.send('curlbot 1.0');
+  return res.render('index', {
+    game_id: '1ef7f9f4-80ec-4e7d-a4bc-549a22873157'
+  });
 })
 
 app.get('/:game_id', (req, res) => {
