@@ -67,22 +67,48 @@ const states = {
   '1ef7f9f4-80ec-4e7d-a4bc-549a22873157': {
     end: 1,
     position: TeamPosition.Lead,
-    rock: 1
+    rock: 1,
+    shots: []
   }
 }
 
+function newGame() {
+  const game_id = uuid.v4();
+
+  states[game_id] ={
+    end: 1,
+    position: TeamPosition.Lead,
+    rock: 1,
+    shots: []
+  };
+
+  return game_id;
+}
+
 app.get('/', (req, res) => {
-  return res.render('index', {
-    game_id: '1ef7f9f4-80ec-4e7d-a4bc-549a22873157'
-  });
-})
+  const game_id = newGame();
+  return res.redirect(game_id);
+});
 
 app.get('/:game_id', (req, res) => {
   const { game_id } = req.params;
   const state = states[game_id];
-  console.log(state);
   
-  return res.render('game', {
+  if (state) {
+    return res.render('game', {
+      ...state,
+      game_id
+    });
+  }
+  
+  res.send('no')
+});
+
+app.get('/:game_id/summary', (req, res) => {
+  const { game_id } = req.params;
+  const state = states[game_id];
+  
+  return res.render('summary', {
     ...state,
     game_id
   });
@@ -90,8 +116,14 @@ app.get('/:game_id', (req, res) => {
 
 app.post('/:game_id', (req, res) => {
   const { game_id } = req.params;
-  console.log(req.body);
-  return res.send('OK')
+  const state = states[game_id];
+
+  states[game_id] = nextState({
+    ...state,
+    shots: state.shots.concat(parseFloat(req.body.rating))
+  });
+
+  return res.send(states[game_id])
 });
 
 const PORT = process.env.PORT || 8080;

@@ -39,7 +39,7 @@
       <option>0</option>
       <option>1</option>
       <option>2</option>
-      <option>3</option>
+      <option selected>3</option>
       <option>4</option>
       <option>5</option>
     </select>
@@ -68,12 +68,13 @@
           headers: {
             'Content-Type': 'application/json'
           }
-        })
-        // fetch()
+        }).then(() => {
+          location.reload();
+        });
       }
 
       function endGame() {
-
+        location.href = location.href + "/summary"
       }
     </script>
   </body>
