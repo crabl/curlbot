@@ -3,6 +3,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const uuid = require('uuid');
+const _ = require('lodash');
 
 const app = express();
 app.set('views', './views');
@@ -85,6 +86,30 @@ function newGame() {
   return game_id;
 }
 
+function computeShotTable(shots: number[]) {
+  const ends = _.chunk(shots, 8);
+
+  let positions = [
+    [],
+    [],
+    [],
+    []
+  ]
+
+  ends.forEach(end => _.chunk(end, 2).forEach((position, i) => {
+    positions[i] = positions[i].concat(position);
+  }));
+
+  const percentages = positions.map(position => {
+    return position.reduce((t, shot) => t + (shot / 5), 0) / position.length * 100;
+  });
+
+  return {
+    positions,
+    percentages
+  };
+}
+
 app.get('/', (req, res) => {
   const game_id = newGame();
   return res.redirect(game_id);
@@ -107,10 +132,14 @@ app.get('/:game_id', (req, res) => {
 app.get('/:game_id/summary', (req, res) => {
   const { game_id } = req.params;
   const state = states[game_id];
+
+  const { positions, percentages } = computeShotTable(state.shots || [])
   
   return res.render('summary', {
     ...state,
-    game_id
+    game_id,
+    positions,
+    percentages
   });
 });
 

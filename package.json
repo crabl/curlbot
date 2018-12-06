@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node app.ts"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,9 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "ts-node": "^7.0.1",
-    "twilio": "^3.25.0"
+    "twilio": "^3.25.0",
+    "typescript": "^3.2.1"
   }
 }
