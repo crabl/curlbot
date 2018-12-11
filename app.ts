@@ -19,7 +19,7 @@ enum TeamPosition {
   Skip = 'SKIP'
 }
 
-const positions = [
+const POSITIONS = [
   TeamPosition.Lead,
   TeamPosition.Second,
   TeamPosition.Third, 
@@ -54,8 +54,8 @@ function nextState(current_state: GameState): GameState {
     }
 
     // rotaté
-    const pos_index = positions.indexOf(current_state.position);
-    next_state.position = positions[(pos_index + 1) % 4]; 
+    const pos_index = POSITIONS.indexOf(current_state.position);
+    next_state.position = POSITIONS[(pos_index + 1) % 4]; 
   }
 
   // calculate next rock number
@@ -70,6 +70,12 @@ const states = {
     position: TeamPosition.Lead,
     rock: 1,
     shots: []
+  },
+  '1d02fcaa-1748-4f4c-a94e-90af2cc8920f': {
+    end: 7,
+    position: TeamPosition.Lead,
+    rock: 1,
+    shots: [3,5,5,0,3,4,5,3,2,1,5,0,4,3,0,2,0,1,1,1,3,0,3,4,2,4,4,4,0,2,0,4,1,3,3,4,2,1,0,1,3,0,4,4,0,5,0,0]
   }
 }
 
@@ -139,6 +145,7 @@ app.get('/:game_id/summary', (req, res) => {
     ...state,
     game_id,
     positions,
+    position_names: POSITIONS,
     percentages
   });
 });

@@ -9,17 +9,47 @@
         font-family: -apple-system, Helvetica, Arial, sans-serif;
         box-sizing: border-box;
         margin: 0;
-        padding: 0 10px;
-        background: #000;
+        padding: 10px;
+        background: #333;
         width: 176px;
         display: flex;
         flex-direction: column;
         color: #fff;
       }
+
+      td, th {
+        border: 1px solid #999;
+      }
+
+      td {
+        padding: 4px;
+      }
     </style>
   </head>
   <body>
-      <%= percentages %>
-      <%= positions %>
+      <table>
+        <thead>
+          <tr>
+            <th>POS</th>
+            <% for (let i = 0; i < Math.ceil(positions[0].length / 2); i++) { %>
+              <th colspan='2'>
+                <%= i %>
+              </th>
+            <% } %>
+            <th>TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < positions.length; i++) { %>
+            <tr>
+              <td><%= position_names[i] %></td>
+              <% for (var j = 0; j < positions[i].length; j++) { %>
+                <td><%= positions[i][j] %></td>
+              <% } %>
+              <td><%= parseFloat(percentages[i]).toFixed(2) + '%' %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
   </body>
 </html>
