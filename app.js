@@ -27,7 +27,7 @@ var TeamPosition;
     TeamPosition["Third"] = "3RD";
     TeamPosition["Skip"] = "SKIP";
 })(TeamPosition || (TeamPosition = {}));
-var positions = [
+var POSITIONS = [
     TeamPosition.Lead,
     TeamPosition.Second,
     TeamPosition.Third,
@@ -46,8 +46,8 @@ function nextState(current_state) {
             next_state.end = current_state.end + 1;
         }
         // rotaté
-        var pos_index = positions.indexOf(current_state.position);
-        next_state.position = positions[(pos_index + 1) % 4];
+        var pos_index = POSITIONS.indexOf(current_state.position);
+        next_state.position = POSITIONS[(pos_index + 1) % 4];
     }
     // calculate next rock number
     next_state.rock = current_state.rock % 2 + 1;
@@ -59,6 +59,12 @@ var states = {
         position: TeamPosition.Lead,
         rock: 1,
         shots: []
+    },
+    '1d02fcaa-1748-4f4c-a94e-90af2cc8920f': {
+        end: 7,
+        position: TeamPosition.Lead,
+        rock: 1,
+        shots: [3, 5, 5, 0, 3, 4, 5, 3, 2, 1, 5, 0, 4, 3, 0, 2, 0, 1, 1, 1, 3, 0, 3, 4, 2, 4, 4, 4, 0, 2, 0, 4, 1, 3, 3, 4, 2, 1, 0, 1, 3, 0, 4, 4, 0, 5, 0, 0]
     }
 };
 function newGame() {
@@ -107,8 +113,7 @@ app.get('/:game_id/summary', function (req, res) {
     var state = states[game_id];
     var _a = computeShotTable(state.shots || []), positions = _a.positions, percentages = _a.percentages;
     return res.render('summary', __assign({}, state, { game_id: game_id,
-        positions: positions,
-        percentages: percentages }));
+        positions: positions, position_names: POSITIONS, percentages: percentages }));
 });
 app.post('/:game_id', function (req, res) {
     var game_id = req.params.game_id;
